@@ -11,17 +11,21 @@ import javax.inject.Inject;
 import domainevent.command.handler.EventHandler;
 
 import msa.commons.event.EventId;
-import msa.commons.microservices.customerairline.qualifier.StartedSagaCustomerQualifier;
+import msa.commons.microservices.customerairline.qualifier.CreateCustomerByCreateReservationEventQualifier;
+import msa.commons.microservices.customerairline.qualifier.GetCustomerByCreateReservationEventQualifier;
 
 @Singleton
 @Startup
 public class EventHandlerRegistry {
     private Map<EventId, EventHandler> handlers = new EnumMap<>(EventId.class);
-    private EventHandler startCreationCustomerSagaHandler;
+    private EventHandler getCustomerByCreateReservationEvent;
+    private EventHandler createCustomerByCreateReservationEvent;
+
 
     @PostConstruct
     public void init(){
-        this.handlers.put(EventId.RESERVATION_AIRLINE_INIT_CREATE_CUSTOMER, startCreationCustomerSagaHandler);
+        this.handlers.put(EventId.CUSTOMER_AIRLINE_GET_CUSTOMER_RESERVATION_AIRLINE_CREATE_RESERVATION, getCustomerByCreateReservationEvent);
+        this.handlers.put(EventId.CUSTOMER_AIRLINE_CREATE_CUSTOMER_RESERVATION_AIRLINE_CREATE_RESERVATION_COMMIT_SAGA, createCustomerByCreateReservationEvent);
     }
 
     public EventHandler getHandler(EventId eventId) {
@@ -29,7 +33,12 @@ public class EventHandlerRegistry {
     }
 
     @Inject
-    public void setGetAircraftByIdHandler(@StartedSagaCustomerQualifier EventHandler startCreationCustomerSagaHandler) {
-        this.startCreationCustomerSagaHandler = startCreationCustomerSagaHandler;
+    public void setGetCustomerByCreateReservationEventr(@GetCustomerByCreateReservationEventQualifier EventHandler getCustomerByCreateReservationEvent) {
+        this.getCustomerByCreateReservationEvent = getCustomerByCreateReservationEvent;
+    }
+
+    @Inject
+    public void setCreateCustomerByCreateReservationEvent(@CreateCustomerByCreateReservationEventQualifier EventHandler createCustomerByCreateReservationEvent) {
+        this.createCustomerByCreateReservationEvent = createCustomerByCreateReservationEvent;
     }
 }

@@ -10,7 +10,6 @@ import javax.persistence.LockModeType;
 import business.customer.Customer;
 import business.customer.CustomerDTO;
 import business.mapper.CustomerMapper;
-import msa.commons.saga.SagaPhases;
 
 @Stateless
 public class CustomerServicesImpl implements CustomerServices {
@@ -27,35 +26,20 @@ public class CustomerServicesImpl implements CustomerServices {
     }
 
     @Override
-    public CustomerDTO beginSagaSaveCustomer(CustomerDTO customerDTO) {
-        customerDTO.setActive(false);
-        Customer c = CustomerMapper.INSTANCE.dtoToEntity(customerDTO, SagaPhases.STARTED);
-        this.entityManager.persist(c);
+    public CustomerDTO save(CustomerDTO customerDTO) {
+        Customer customer = new Customer();
+        customer.setDni(customerDTO.getDni());
+        customer.setName(customerDTO.getName());
+        customer.setEmail(customerDTO.getEmail());
+        customer.setPhone(customerDTO.getPhone());
+        this.entityManager.persist(customer);
         this.entityManager.flush();
-        return CustomerMapper.INSTANCE.entityToDto(c);
-    }
-
-    
-    @Override
-    public void endSuccesSagaSaveCustomer(CustomerDTO customerDTO) {
-        Customer c = this.entityManager.createNamedQuery("customer.findByDNI", Customer.class)
-            .setParameter("dni", customerDTO.getDni())
-            .setLockMode(LockModeType.OPTIMISTIC).getSingleResult();
-        c.setActive(true);
-        c.setStatusSaga(SagaPhases.COMPLETED);
-        this.entityManager.merge(c);
-    }
-
-    @Override
-    public void endRemoveSagaSaveCustomer(CustomerDTO customerDTO) {
-        Customer c = this.entityManager.createNamedQuery("customer.findByDNI", Customer.class)
-            .setParameter("dni", customerDTO.getDni())
-            .setLockMode(LockModeType.OPTIMISTIC).getSingleResult();
-        this.entityManager.remove(c);
+        return CustomerMapper.INSTANCE.entityToDto(customer);
     }
 
     @Inject
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
+
 }

@@ -41,9 +41,6 @@ public class Customer {
 	private String dni;
 	@Column(nullable = false, name = "is_active")
     private boolean active;
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, name = "status_saga")
-    private SagaPhases statusSaga;
 	@Version
     @Column(name = "version")
 	private int version;
