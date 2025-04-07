@@ -17,7 +17,7 @@ public class CreateCustomerByCreateReservationEvent extends BaseHandler {
 
     @Override
     public void handleCommand(Object data) {
-        CreateReservationCommand c = (CreateReservationCommand) data;
+        CreateReservationCommand c = this.gson.fromJson(data.toString(), CreateReservationCommand.class);
         if (!c.getCustomerInfo().isPreviouslyCreated()) 
             this.customerServices.save(CustomerMapper.INSTANCE.customerInfoCommandCreateReserationToDto(c.getCustomerInfo()));
         this.jmsEventPublisher.publish(EventId.RESERVATION_AIRLINE_CREATE_RESERVATION_COMMIT_SAGA, c);
