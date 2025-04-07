@@ -20,7 +20,7 @@ public class GetCustomerByCreateReservationEvent extends BaseHandler {
     public void handleCommand(Object data) {
         final CreateReservationCommand command = (CreateReservationCommand) data;
         CustomerDTO customerDTO = this.customerServices.getCustomerByDNI(command.getCustomerInfo().getDni());
-        command.setPreviouslyCreated(customerDTO != null);
+        command.getCustomerInfo().setPreviouslyCreated(customerDTO != null);
         this.jmsEventPublisher.publish(EventId.FLIGHT_VALIDATE_FLIGHT_RESERVATION_AIRLINE_CREATE_RESERVATION, command);
     }
     
