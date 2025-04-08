@@ -18,7 +18,7 @@ public class CreateCustomerByCreateReservationEvent extends BaseHandler {
 
     @Override
     public void handleCommand(Object data) {
-        CreateReservationCommand c = this.gson.fromJson(this.gson.toJson(data.toString()), CreateReservationCommand.class);
+        CreateReservationCommand c = this.gson.fromJson(this.gson.toJson(data), CreateReservationCommand.class);
         CustomerDTO customerDTO = CustomerMapper.INSTANCE.customerInfoCommandCreateReserationToDto(c.getCustomerInfo());
         if (!c.getCustomerInfo().isPreviouslyCreated()) 
             customerDTO = this.customerServices.save(customerDTO);
