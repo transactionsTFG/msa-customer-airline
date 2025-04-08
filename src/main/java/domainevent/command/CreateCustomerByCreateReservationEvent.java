@@ -3,6 +3,11 @@ package domainevent.command;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.mysql.cj.log.Log;
+
 import business.customer.CustomerDTO;
 import business.mapper.CustomerMapper;
 import domainevent.command.handler.BaseHandler;
@@ -15,10 +20,9 @@ import msa.commons.microservices.reservationairline.commandevent.CreateReservati
 @CreateCustomerByCreateReservationEventQualifier
 @Local(EventHandler.class)
 public class CreateCustomerByCreateReservationEvent extends BaseHandler {
-
     @Override
-    public void handleCommand(Object data) {
-        CreateReservationCommand c = this.gson.fromJson(this.gson.toJson(data), CreateReservationCommand.class);
+    public void handleCommand(String json) {
+        CreateReservationCommand c = this.gson.fromJson(json, CreateReservationCommand.class);
         CustomerDTO customerDTO = CustomerMapper.INSTANCE.customerInfoCommandCreateReserationToDto(c.getCustomerInfo());
         if (!c.getCustomerInfo().isPreviouslyCreated()) 
             customerDTO = this.customerServices.save(customerDTO);

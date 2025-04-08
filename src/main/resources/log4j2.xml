@@ -2,7 +2,7 @@
 <Configuration status="WARN">
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
-      <PatternLayout pattern="MSACustomer - %d{HH:mm:ss.SSS} %-5level - %logger - %msg%n%n" />
+      <PatternLayout pattern="MSACustomer - %d{HH:mm:ss.SSS} %-5level - %logger - %msg%n%n"  charset="UTF-8" />
     </Console>
   </Appenders>
   <Loggers>

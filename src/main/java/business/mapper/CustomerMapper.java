@@ -16,7 +16,7 @@ public interface CustomerMapper {
     @Mapping(target = "version", ignore = true)
     Customer dtoToEntity(CustomerDTO customerDTO);
 
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "id", source = "idCustomer")
     @Mapping(target = "active", ignore = true)
     CustomerDTO customerInfoCommandCreateReserationToDto(CustomerInfo customerInfo);
 }

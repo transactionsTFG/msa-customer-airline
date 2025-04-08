@@ -17,8 +17,8 @@ import msa.commons.microservices.reservationairline.commandevent.CreateReservati
 public class GetCustomerByCreateReservationEvent extends BaseHandler {
 
     @Override
-    public void handleCommand(Object data) {
-        final CreateReservationCommand command = this.gson.fromJson(data.toString(), CreateReservationCommand.class);
+    public void handleCommand(String json) {
+        final CreateReservationCommand command = this.gson.fromJson(json, CreateReservationCommand.class);
         CustomerDTO customerDTO = this.customerServices.getCustomerByDNI(command.getCustomerInfo().getDni());
         final boolean previouslyCreated = customerDTO != null;
         final long idCustomer = previouslyCreated ? customerDTO.getId() : 0L;
