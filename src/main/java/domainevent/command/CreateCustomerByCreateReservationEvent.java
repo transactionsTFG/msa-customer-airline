@@ -23,7 +23,7 @@ import msa.commons.microservices.reservationairline.commandevent.CreateReservati
 public class CreateCustomerByCreateReservationEvent extends BaseHandler {
     @Override
     public void publishCommand(String json) {
-        EventData event = this.gson.fromJson(json, EventData.class);
+        EventData event = EventData.fromJson(json, CreateReservationCommand.class);
         CreateReservationCommand c = (CreateReservationCommand) event.getData();
         CustomerDTO customerDTO = CustomerMapper.INSTANCE.customerInfoCommandCreateReserationToDto(c.getCustomerInfo());
         if (!c.getCustomerInfo().isPreviouslyCreated()) 
