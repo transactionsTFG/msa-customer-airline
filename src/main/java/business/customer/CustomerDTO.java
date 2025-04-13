@@ -10,4 +10,5 @@ public class CustomerDTO {
 	private String phone;
 	private String dni;
     private boolean active;
+	private String sagaId;
 }

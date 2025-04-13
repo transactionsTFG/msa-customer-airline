@@ -3,10 +3,6 @@ package domainevent.command;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.mysql.cj.log.Log;
 
 import business.customer.CustomerDTO;
 import business.mapper.CustomerMapper;
@@ -26,6 +22,7 @@ public class CreateCustomerByCreateReservationEvent extends BaseHandler {
         EventData event = EventData.fromJson(json, CreateReservationCommand.class);
         CreateReservationCommand c = (CreateReservationCommand) event.getData();
         CustomerDTO customerDTO = CustomerMapper.INSTANCE.customerInfoCommandCreateReserationToDto(c.getCustomerInfo());
+        customerDTO.setSagaId(event.getSagaId());
         if (!c.getCustomerInfo().isPreviouslyCreated()) 
             customerDTO = this.customerServices.save(customerDTO);
         c.getCustomerInfo().setIdCustomer(customerDTO.getId());

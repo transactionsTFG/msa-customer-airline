@@ -33,6 +33,8 @@ public class Customer {
 	private String email;
 	@Column(nullable = false, name = "phone")
 	private String phone;
+	@Column(name = "saga_id")
+	private String sagaId;
 	@Column(nullable = false, unique = true, name = "dni")
 	private String dni;
 	@Column(nullable = false, name = "is_active")

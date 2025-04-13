@@ -37,9 +37,29 @@ public class CustomerServicesImpl implements CustomerServices {
         return CustomerMapper.INSTANCE.entityToDto(customer);
     }
 
+    @Override
+    public boolean validateCustomerSagaId(String dni, String sagaId) {
+        List<Customer> listCustomer = this.entityManager.createNamedQuery("customer.findByDNI", Customer.class)
+                                        .setParameter("dni", dni)
+                                        .setLockMode(LockModeType.OPTIMISTIC)
+                                        .getResultList();
+        return !listCustomer.isEmpty() && sagaId.equals(listCustomer.get(0).getSagaId());
+    }
+
+    @Override
+    public boolean remove(long getIdCustomer) {
+        Customer c = this.entityManager.find(Customer.class, getIdCustomer, LockModeType.OPTIMISTIC);
+        if (c != null) 
+            this.entityManager.remove(c);
+        return c != null;
+    }
+
     @Inject
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
+
+    
+
 
 }
