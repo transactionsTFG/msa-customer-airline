@@ -8,7 +8,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 
-import domainevent.command.handler.EventHandler;
+import domainevent.command.handler.CommandPublisher;
 
 import msa.commons.event.EventId;
 import msa.commons.microservices.customerairline.qualifier.CreateCustomerByCreateReservationEventQualifier;
@@ -16,10 +16,10 @@ import msa.commons.microservices.customerairline.qualifier.GetCustomerByCreateRe
 
 @Singleton
 @Startup
-public class EventHandlerRegistry {
-    private Map<EventId, EventHandler> handlers = new EnumMap<>(EventId.class);
-    private EventHandler getCustomerByCreateReservationEvent;
-    private EventHandler createCustomerByCreateReservationEvent;
+public class CommandRegistry {
+    private Map<EventId, CommandPublisher> handlers = new EnumMap<>(EventId.class);
+    private CommandPublisher getCustomerByCreateReservationEvent;
+    private CommandPublisher createCustomerByCreateReservationEvent;
 
 
     @PostConstruct
@@ -28,17 +28,17 @@ public class EventHandlerRegistry {
         this.handlers.put(EventId.CUSTOMER_AIRLINE_CREATE_CUSTOMER_RESERVATION_AIRLINE_CREATE_RESERVATION_COMMIT_SAGA, createCustomerByCreateReservationEvent);
     }
 
-    public EventHandler getHandler(EventId eventId) {
+    public CommandPublisher getHandler(EventId eventId) {
         return this.handlers.get(eventId);
     }
 
     @Inject
-    public void setGetCustomerByCreateReservationEventr(@GetCustomerByCreateReservationEventQualifier EventHandler getCustomerByCreateReservationEvent) {
+    public void setGetCustomerByCreateReservationEventr(@GetCustomerByCreateReservationEventQualifier CommandPublisher getCustomerByCreateReservationEvent) {
         this.getCustomerByCreateReservationEvent = getCustomerByCreateReservationEvent;
     }
 
     @Inject
-    public void setCreateCustomerByCreateReservationEvent(@CreateCustomerByCreateReservationEventQualifier EventHandler createCustomerByCreateReservationEvent) {
+    public void setCreateCustomerByCreateReservationEvent(@CreateCustomerByCreateReservationEventQualifier CommandPublisher createCustomerByCreateReservationEvent) {
         this.createCustomerByCreateReservationEvent = createCustomerByCreateReservationEvent;
     }
 }
