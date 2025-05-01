@@ -6,11 +6,12 @@ import javax.ejb.Stateless;
 
 import business.customer.CustomerDTO;
 import business.mapper.CustomerMapper;
+import business.qualifier.createreservation.CreateCustomerByCreateReservationEventQualifier;
 import domainevent.command.handler.BaseHandler;
 import domainevent.command.handler.CommandPublisher;
 import msa.commons.event.EventData;
 import msa.commons.event.EventId;
-import msa.commons.microservices.customerairline.qualifier.CreateCustomerByCreateReservationEventQualifier;
+
 import msa.commons.microservices.reservationairline.commandevent.CreateReservationCommand;
 
 @Stateless

@@ -4,12 +4,12 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 
 import business.customer.CustomerDTO;
+import business.qualifier.createreservation.GetCustomerByCreateReservationEventQualifier;
 import domainevent.command.handler.BaseHandler;
 import domainevent.command.handler.CommandPublisher;
 import msa.commons.event.EventData;
 import msa.commons.event.EventId;
 
-import msa.commons.microservices.customerairline.qualifier.GetCustomerByCreateReservationEventQualifier;
 import msa.commons.microservices.reservationairline.commandevent.CreateReservationCommand;
 
 @Stateless

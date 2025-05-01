@@ -3,11 +3,11 @@ package domainevent.command;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 
+import business.qualifier.createreservation.CreateCustomerByCreateReservationEventRollbackQualifier;
 import domainevent.command.handler.BaseHandler;
 import domainevent.command.handler.CommandPublisher;
 import msa.commons.event.EventData;
 import msa.commons.event.EventId;
-import msa.commons.microservices.customerairline.qualifier.CreateCustomerByCreateReservationEventRollbackQualifier;
 import msa.commons.microservices.reservationairline.commandevent.CreateReservationCommand;
 
 @Stateless
