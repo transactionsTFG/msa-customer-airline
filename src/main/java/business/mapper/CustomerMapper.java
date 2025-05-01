@@ -6,7 +6,7 @@ import org.mapstruct.factory.Mappers;
 
 import business.customer.Customer;
 import business.customer.CustomerDTO;
-import msa.commons.microservices.reservationairline.commandevent.model.CustomerInfo;
+import msa.commons.commands.createreservation.model.CustomerInfo;
 
 @Mapper
 public interface CustomerMapper {
