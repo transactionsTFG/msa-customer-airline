@@ -18,5 +18,6 @@ public interface CustomerMapper {
 
     @Mapping(target = "id", source = "idCustomer")
     @Mapping(target = "active", expression = "java(true)")
+    @Mapping(target = "sagaId", ignore = true)
     CustomerDTO customerInfoCommandCreateReserationToDto(CustomerInfo customerInfo);
 }
